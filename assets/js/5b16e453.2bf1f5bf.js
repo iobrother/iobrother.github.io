@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkiobrother=self.webpackChunkiobrother||[]).push([[78],{5623:function(e){e.exports=JSON.parse('{"plugin":{"name":"docusaurus-plugin-content-docs","id":"course"}}')}}]);

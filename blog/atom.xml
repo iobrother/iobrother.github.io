@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://iobrother.com/blog</id>
+    <title>IO兄弟 Blog</title>
+    <updated>2022-04-29T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://iobrother.com/blog"/>
+    <subtitle>IO兄弟 Blog</subtitle>
+    <icon>https://iobrother.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[welcome]]></title>
+        <id>welcome</id>
+        <link href="https://iobrother.com/blog/welcome"/>
+        <updated>2022-04-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[这家伙很懒，什么都没留下。]]></summary>
+        <content type="html"><![CDATA[<p>这家伙很懒，什么都没留下。</p>]]></content>
+    </entry>
+</feed>
