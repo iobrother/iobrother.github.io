@@ -6,7 +6,7 @@ sidebar_position: 5
 
 ## 源码地址
 
-https://github.com/iobrother/zmicro/tree/master/examples/greeter
+https://github.com/zmicro-team/zmicro/tree/master/examples/greeter
 
 ## 服务端配置文件
 
@@ -29,17 +29,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/iobrother/zmicro"
-	"github.com/iobrother/zmicro/core/log"
-	"github.com/iobrother/zmicro/examples/proto"
 	"github.com/smallnest/rpcx/server"
+	"github.com/zmicro-team/zmicro"
+	"github.com/zmicro-team/zmicro/core/log"
+	"github.com/zmicro-team/zmicro/examples/proto"
 )
 
 func main() {
 	app := zmicro.New(zmicro.InitRpcServer(InitRpcServer))
 
 	if err := app.Run(); err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 }
 
@@ -56,12 +56,8 @@ func (s *GreeterImpl) SayHello(ctx context.Context, req *proto.HelloRequest, rsp
 	*rsp = proto.HelloReply{
 		Message: fmt.Sprintf("hello %s!", req.Name),
 	}
-
-	fmt.Println("kkkkk")
 	return nil
 }
-
-
 ```
 
 ## 客户端代码
@@ -72,18 +68,21 @@ package main
 import (
 	"context"
 
-	"github.com/iobrother/zmicro/core/log"
-	"github.com/iobrother/zmicro/core/transport/rpc/client"
-	"github.com/iobrother/zmicro/examples/proto"
+	"github.com/zmicro-team/zmicro/core/log"
+	"github.com/zmicro-team/zmicro/core/transport/rpc/client"
+	"github.com/zmicro-team/zmicro/examples/proto"
 )
 
 func main() {
-  // 客户端，不需要指定服务器地址，但需要指定etcd地址
-	c := client.NewClient(
+	c, err := client.NewClient(
 		client.WithServiceName("Greeter"),
 		client.BasePath("/zmicro"),
 		client.EtcdAddr([]string{"127.0.0.1:2379"}),
 	)
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	cli := proto.NewGreeterClient(c.GetXClient())
 
 	req := &proto.HelloRequest{
@@ -92,12 +91,11 @@ func main() {
 
 	rsp, err := cli.SayHello(context.Background(), req)
 	if err != nil {
-		log.Error(err.Error())
+		log.Error(err)
 		return
 	}
 	log.Infof("reply: %s", rsp.Message)
 }
-
 ```
 
 ## 启动服务器

@@ -8,16 +8,16 @@ sidebar_position: 2
 
 ## 源码地址
 
-https://github.com/iobrother/zmicro/tree/master/examples/gin/api
+https://github.com/zmicro-team/zmicro/tree/master/examples/gin/api
 
 ## proto文件
 
 ```
 syntax = "proto3";
 
-option go_package = "github.com/iobrother/zmicro/examples/gin/api/api";
+option go_package = "github.com/zmicro-team/zmicro/examples/gin/api/api";
 
-package github.com.iobrother.zmicro.examples.gin.api.api;
+package github.com.zmicro.team.zmicro.examples.gin.api.api;
 
 import "google/api/annotations.proto";
 import "gogoproto/gogo.proto";
@@ -43,7 +43,7 @@ message HelloReply {
 
 ```bash
 go install github.com/gogo/protobuf/protoc-gen-gofast@latest
-go install github.com/iobrother/zmicro/tree/master/cmd/protoc-gen-zmicro-gin@latest
+go install github.com/zmicro-team/zmicro/tree/master/cmd/protoc-gen-zmicro-gin@latest
 ```
 
 生成代码
@@ -91,10 +91,10 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/iobrother/zmicro"
-	"github.com/iobrother/zmicro/core/log"
-	zgin "github.com/iobrother/zmicro/core/transport/http"
-	"github.com/iobrother/zmicro/examples/gin/api/api"
+	"github.com/zmicro-team/zmicro"
+	"github.com/zmicro-team/zmicro/core/log"
+	zgin "github.com/zmicro-team/zmicro/core/transport/http"
+	"github.com/zmicro-team/zmicro/examples/gin/api/api"
 )
 
 // curl http://127.0.0.1:5180/hello/zmicro
@@ -102,14 +102,13 @@ func main() {
 	app := zmicro.New(zmicro.InitHttpServer(InitHttpServer))
 
 	if err := app.Run(); err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 }
 
 func InitHttpServer(r *gin.Engine) error {
 	gin.DisableBindValidation()
 
-	// 注册路由
 	g := r.Group("/")
 	api.RegisterGreeterHTTPServer(g, &GreeterImpl{})
 
@@ -120,7 +119,6 @@ type GreeterImpl struct {
 	zgin.Implemented
 }
 
-// 接口实现，我们发现，这里的接口与rpcx接口风格是完全一样的。
 func (s *GreeterImpl) SayHello(ctx context.Context, req *api.HelloRequest, rsp *api.HelloReply) error {
 	*rsp = api.HelloReply{
 		Message: fmt.Sprintf("hello %s!", req.Name),
@@ -128,7 +126,6 @@ func (s *GreeterImpl) SayHello(ctx context.Context, req *api.HelloRequest, rsp *
 
 	return nil
 }
-
 ```
 
 ## 启动服务器

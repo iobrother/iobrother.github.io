@@ -8,14 +8,14 @@ sidebar_position: 4
 
 ## 源码地址
 
-https://github.com/iobrother/zmicro/tree/master/examples/multi
+https://github.com/zmicro-team/zmicro/tree/master/examples/multi
 
 ## rpc proto文件
 
 ```
 syntax = "proto3";
 
-option go_package = "github.com/iobrother/zmicro/examples/proto";
+option go_package = "github.com/zmicro-team/zmicro/examples/proto";
 
 package proto;
 
@@ -50,9 +50,9 @@ protoc -I. \
 ```
 syntax = "proto3";
 
-option go_package = "github.com/iobrother/zmicro/examples/gin/api/api";
+option go_package = "github.com/zmicro-team/zmicro/examples/multi/server/api";
 
-package github.com.iobrother.zmicro.examples.gin.api.api;
+package github.com.zmicro-team.zmicro.examples.multi.server.api;
 
 import "google/api/annotations.proto";
 import "gogoproto/gogo.proto";
@@ -122,23 +122,22 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/iobrother/zmicro"
-	"github.com/iobrother/zmicro/core/log"
-	zgin "github.com/iobrother/zmicro/core/transport/http"
-	"github.com/iobrother/zmicro/examples/multi/server/api"
-	"github.com/iobrother/zmicro/examples/proto"
 	"github.com/smallnest/rpcx/server"
+	"github.com/zmicro-team/zmicro"
+	"github.com/zmicro-team/zmicro/core/log"
+	zgin "github.com/zmicro-team/zmicro/core/transport/http"
+	"github.com/zmicro-team/zmicro/examples/multi/server/api"
+	"github.com/zmicro-team/zmicro/examples/proto"
 )
 
 func main() {
-	// 同时启动 http 服务与 rpc 服务
 	app := zmicro.New(
 		zmicro.InitRpcServer(InitRpcServer),
 		zmicro.InitHttpServer(InitHttpServer),
 	)
 
 	if err := app.Run(); err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 }
 
@@ -172,7 +171,6 @@ type HttpGreeter struct {
 	zgin.Implemented
 }
 
-// 接口实现，我们发现，这里的接口与rpcx接口风格是完全一样的。
 func (s *HttpGreeter) SayHello(ctx context.Context, req *api.HelloRequest, rsp *api.HelloReply) error {
 	*rsp = api.HelloReply{
 		Message: fmt.Sprintf("hello %s!", req.Name),
@@ -180,6 +178,7 @@ func (s *HttpGreeter) SayHello(ctx context.Context, req *api.HelloRequest, rsp *
 
 	return nil
 }
+
 ```
 
 ## 启动服务器

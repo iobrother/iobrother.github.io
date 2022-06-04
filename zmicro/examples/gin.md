@@ -8,7 +8,7 @@ sidebar_position: 1
 
 ## 源码地址
 
-https://github.com/iobrother/zmicro/tree/master/examples/gin/simple
+https://github.com/zmicro-team/zmicro/tree/master/examples/gin/simple
 
 ## 服务端配置文件
 
@@ -30,17 +30,16 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/iobrother/zmicro"
-	"github.com/iobrother/zmicro/core/log"
+	"github.com/zmicro-team/zmicro"
+	"github.com/zmicro-team/zmicro/core/log"
 )
 
 // curl http://127.0.0.1:5180/hello/zmicro
 func main() {
-  	// zmicro.InitHttpServer 功能选项表示开启http服务器
 	app := zmicro.New(zmicro.InitHttpServer(InitHttpServer))
 
 	if err := app.Run(); err != nil {
-		log.Fatal(err.Error())
+		log.Fatal(err)
 	}
 }
 
@@ -51,7 +50,6 @@ func InitHttpServer(r *gin.Engine) error {
 
 	return nil
 }
-
 ```
 
 ## 启动服务器
