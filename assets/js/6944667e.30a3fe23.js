@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkiobrother=self.webpackChunkiobrother||[]).push([[8502],{5616:function(e){e.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"zmicro"}')}}]);

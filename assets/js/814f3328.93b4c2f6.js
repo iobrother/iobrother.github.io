@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkiobrother=self.webpackChunkiobrother||[]).push([[2535],{5641:function(e){e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"welcome","permalink":"/blog/welcome"}]}')}}]);
